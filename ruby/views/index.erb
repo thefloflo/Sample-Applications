@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <script type='text/javascript' src='https://clef.io/static/clef.js'></script>
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+  </head>
+  <body>
+    <% if @user %>
+      <h2>Welcome <%=@user%></h2>
+    <% else %>
+      <h2>Scan the QR code below to sign in</h2>
+      <div id='qr'></div>
+    <% end %>
+    <script type='text/javascript'>
+      var clef = Clef('722fb478f96d817aa0c434d2b256cf7c', undefined, {debug: true});
+      clef.initFrame({
+        dim:200, 
+        inside:'#qr',
+        redirect_url: 'http://localhost:9292/login'
+      });
+    </script>
+  </body>
+</html>
