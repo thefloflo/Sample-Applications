@@ -10,7 +10,7 @@ app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 @app.route("/")
 def hello():
     user = session.get('user', None)
-    email = json.loads(user)['info']['email']
+    email = json.loads(user)['info']['email'] if user else None
     return render_template('index.html', user=user, email=email)
     
 @app.route('/login')
