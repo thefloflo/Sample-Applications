@@ -3,8 +3,8 @@ import requests
 import json
 app = Flask(__name__)
 
-APP_ID = '722fb478f96d817aa0c434d2b256cf7c'
-APP_SECRET = '66958e82b7e36507872899232be1b1ca'
+APP_ID = '360cc9edd45ecc428ca8c3652b5effee'
+APP_SECRET = '603bd6e189c7594f6697faee26a4fef0'
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 @app.route("/")

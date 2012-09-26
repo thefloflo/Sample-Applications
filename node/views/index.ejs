@@ -1,6 +1,6 @@
 <html>
   <head>
-    <script type='text/javascript' src='https://clef.io/static/clef.js'></script>
+    <script type='text/javascript' src='https://clef.io/static/javascripts/clef.js'></script>
     <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
   </head>
   <body>
@@ -14,10 +14,10 @@
       <div id='qr'></div>
     <%}%>
     <script type='text/javascript'>
-      var clef = Clef('722fb478f96d817aa0c434d2b256cf7c', undefined, {debug: true});
+      var clef = Clef('8db34c6435ba25840ed2b1c2cc730d94', undefined, {debug: true});
       clef.initFrame({
         dim:200, 
-        inside:'#qr',
+        inside:'qr',
         redirect_url: 'http://localhost:9292/login'
       });
     </script>

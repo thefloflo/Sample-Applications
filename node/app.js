@@ -26,8 +26,8 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-var APP_ID = '722fb478f96d817aa0c434d2b256cf7c',
-    APP_SECRET = '66958e82b7e36507872899232be1b1ca';
+var APP_ID = '8db34c6435ba25840ed2b1c2cc730d94',
+    APP_SECRET = '6bc4b235c7b374e6113f0132caa95f84';
 
 app.get('/', function(req, res) {
   var user = (req.session.user || false)

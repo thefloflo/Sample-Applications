@@ -10,8 +10,8 @@ set :show_exceptions, false
 set :environment, :development
 set :root, File.dirname(__FILE__)
 
-APP_ID = '722fb478f96d817aa0c434d2b256cf7c'
-APP_SECRET = '66958e82b7e36507872899232be1b1ca'
+APP_ID = 'fb648ef625383d0fc08540b35eecb0ef'
+APP_SECRET = '9573feea89dc1c7b762d370d6d6dd5b0'
 
 get '/' do
   @user = session[:user]
