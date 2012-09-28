@@ -11,14 +11,14 @@
     {% else %}
       <h2>Scan the QR code below to sign in</h2>
       <div id='qr'></div>
-    {% endif %}
     <script type='text/javascript'>
-      var clef = Clef('360cc9edd45ecc428ca8c3652b5effee');
+      var clef = Clef('8c9253dca23777745c9102e0be99ea70');
       clef.initFrame({
         dim:200, 
         inside:'qr',
-        redirect_url: 'http://localhost:9292/login'
+        redirect_url: 'http://localhost:5000/login'
       });
     </script>
+    {% endif %}
   </body>
 </html>
