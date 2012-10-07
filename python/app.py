@@ -13,15 +13,17 @@ def hello():
     #email = json.loads(user)['info']['email'] if user else None
     email = user
     return render_template('index.html', user=user, email=email)
-    
+
 @app.route('/login')
 def login():
   code = request.args.get('code')
-  r = requests.get('http://clef.io/api/authorize?code=%s&app_id=%s&app_secret=%s' % (code, APP_ID, APP_SECRET), verify=False)
+  data = {'app_id': APP_ID, 'app_secret': APP_SECRET, 'code': code}
+  r = requests.post('https://clef.io/api/authorize', data=data)
   r = json.loads(r.text)
   print r
   token = r['access_token']
-  r = requests.get('https://clef.io/api/info?access_token=%s' % token, verify=False)
+  data = {'access_token' : token}
+  r = requests.get('https://clef.io/api/info', data=data)
   session['user'] = r.text
   return redirect(url_for('hello'))
 
