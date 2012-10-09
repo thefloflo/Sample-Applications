@@ -36,13 +36,12 @@ app.get('/', function(req, res) {
 
 app.get('/login', function(req, res) {
   var code = req.param('code');
-  var url = ('https://clef.io/api/authorize?code=' + code 
-            + '&app_id=' + APP_ID
-            + '&app_secret=' + APP_SECRET);
+  var url = 'https://clef.io/api/authorize';
+  var form = {app_id:APP_ID, app_secret:APP_SECRET, code:code};
             
-  request(url, function(error, response, body) {
+  request.post({url:url, form:form}, function(error, response, body) {
     var token = JSON.parse(body)['access_token'];
-    request('https://clef.io/api/info?access_token=' + token, function(error, response, body) {
+    request.post({url:'https://clef.io/api/info', form:{access_token:token}}, function(error, response, body) {
       req.session.user = JSON.parse(body)['info'];
       res.redirect('/');
     });
