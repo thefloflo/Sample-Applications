@@ -1,0 +1,1 @@
+# Rails sample application with Clef

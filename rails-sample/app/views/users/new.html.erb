@@ -1,0 +1,11 @@
+<h2>Scan the QR code below to sign in</h2>
+<div id='qr'></div>
+
+<script type='text/javascript'>
+  var clef = Clef('<%= UsersController::CLEF_ID %>');
+  clef.initFrame({
+    dim:200, 
+    inside:'qr',
+    redirect_url: 'http://localhost:3000/users/clef_create'
+  });
+</script>
