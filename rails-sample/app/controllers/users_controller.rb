@@ -8,21 +8,18 @@ class UsersController < ApplicationController
 
   def clef_create
  		code = params[:code]
-	  response = HTTParty.post("https://clef.io/api/authorize", :query => {:code => code, :app_id => CLEF_ID, :app_secret => CLEF_SECRET})
-	  p response
-	  response.each do
-	  	p response[:email]
-	  	p response[:id]
-	  end
-	  if response[:success]
-	    response = HTTParty.post("https://clef.io/api/info", :query => {:access_token => response[:access_token]}).body
-	    session[:user] = response
-	    redirect '/'
+	  response = HTTParty.post("https://clef.io/api/authorize", { body: { code: code, app_id: CLEF_ID, app_secret: CLEF_SECRET} })
+	  if response['success']
+	    response = HTTParty.post("https://clef.io/api/info", { body: {access_token: response['access_token']} })
+	    print response
+	    @user = User.find_or_create_by_clef_id(email: response['info']['email'], clef_id: response['info']['id'])
+	    redirect_to user_path(@user)
 	  else
-	  	return response.to_json
+	  	render json: response.to_json
 	  end
   end
 
   def show
+  	@user = User.find(params[:id])
   end
 end

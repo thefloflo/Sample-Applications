@@ -1,6 +1,6 @@
 RailsSample::Application.routes.draw do
-  resource :users, only: [:new, :show] do
-    member do
+  resources :users do
+    collection do
       get 'clef_create'
     end
   end
