@@ -20,7 +20,7 @@ end
 
 get '/login' do
   code = params[:code]
-  response = JSON.parse(HTTPParty.post("https://clef.io/api/authorize", :query => {:code => code, :app_id => APP_ID, :app_secret => APP_SECRET}).body)
+  response = JSON.parse(HTTParty.post("https://clef.io/api/authorize", :query => {:code => code, :app_id => APP_ID, :app_secret => APP_SECRET}).body)
   if response['success']
     token = response['access_token']
     response = JSON.parse(HTTParty.post("https://clef.io/api/info", :query => {:access_token => token}).body)
