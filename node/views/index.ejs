@@ -11,15 +11,11 @@
       </pre>
     <%} else {%>
       <h2>Scan the QR code below to sign in</h2>
-      <div id='qr'></div>
-    <script type='text/javascript'>
-      var clef = Clef('4f4baa300eae6a7532cc60d06b49e0b9', undefined, {debug: true});
-      clef.initFrame({
-        dim:200, 
-        inside:'qr',
-        redirect_url: 'http://localhost:9292/login'
-      });
-    </script>
+      <script type='text/javascript' 
+      class='clef-code' 
+      src='https://clef.io/v1/clef.js' 
+      data-app-id='4f4baa300eae6a7532cc60d06b49e0b9' 
+      data-redirect-url='http://localhost:9292/login'></script>
     <%}%>
   </body>
 </html>
