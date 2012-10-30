@@ -23,7 +23,8 @@ def login():
   print r
   token = r['access_token']
   data = {'access_token' : token}
-  r = requests.get('https://clef.io/api/info', data=data)
+  r = requests.post('https://clef.io/api/info', data=data)
+  print r.text
   session['user'] = r.text
   return redirect(url_for('hello'))
 
