@@ -20,9 +20,9 @@ end
 
 get '/login' do
   code = params[:code]
-  response = HTTParty.post("https://clef.io/api/authorize", { body: { code: code, app_id: APP_ID, app_secret: APP_SECRET} })
+  response = HTTParty.post("https://clef.io/api/v1/authorize", { body: { code: code, app_id: APP_ID, app_secret: APP_SECRET} })
   if response['success']
-    response = HTTParty.post("https://clef.io/api/info", { body: {access_token: response['access_token']} })
+    response = HTTParty.get("https://clef.io/api/v1/info?access_token=#{response['access_token']}")
     session[:user] = response.body
     redirect '/'
   else
