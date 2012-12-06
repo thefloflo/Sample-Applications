@@ -1,10 +1,9 @@
 RailsSample::Application.routes.draw do
-  resources :users do
-    collection do
-      get 'clef_create'
-    end
-  end
+  resources :users
+
   root to: 'users#new'
+
+  match '/auth/:provider/callback', to: 'users#create'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
