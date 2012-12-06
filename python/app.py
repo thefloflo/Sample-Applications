@@ -18,13 +18,10 @@ def hello():
 def login():
   code = request.args.get('code')
   data = {'app_id': APP_ID, 'app_secret': APP_SECRET, 'code': code}
-  r = requests.post('https://clef.io/api/authorize', data=data)
+  r = requests.post('https://clef.io/api/v1/authorize', data=data)
   r = json.loads(r.text)
-  print r
   token = r['access_token']
-  data = {'access_token' : token}
-  r = requests.post('https://clef.io/api/info', data=data)
-  print r.text
+  r = requests.get('https://clef.io/api/v1/info?access_token=%s' % token)
   session['user'] = r.text
   return redirect(url_for('hello'))
 
