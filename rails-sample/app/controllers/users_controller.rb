@@ -5,9 +5,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    puts auth_hash
     @user = User.find_or_create_from_auth_hash(auth_hash)
-    binding.pry
     redirect_to user_path(@user)
   end
 
