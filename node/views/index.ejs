@@ -10,11 +10,11 @@
         <%=JSON.stringify(user)%>
       </pre>
     <%} else {%>
-      <h2>Scan the QR code below to sign in</h2>
-      <script type='text/javascript' 
-      class='clef-code' 
-      src='https://clef.io/v1/clef.js' 
-      data-app-id='4f4baa300eae6a7532cc60d06b49e0b9' 
+      <h2>Sign in with Clef</h2>
+      <script type='text/javascript'
+      class='clef-button'
+      src='https://clef.io/v2/clef.js'
+      data-app-id='4f4baa300eae6a7532cc60d06b49e0b9'
       data-redirect-url='http://localhost:9292/login'></script>
     <%}%>
   </body>

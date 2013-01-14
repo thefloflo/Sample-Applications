@@ -1,6 +1,6 @@
 <html>
   <head>
-    
+
     <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
   </head>
   <body>
@@ -10,11 +10,11 @@
         <%=@user%>
       </pre>
     <% else %>
-      <h2>Scan the QR code below to sign in</h2>
-      <script type='text/javascript' 
-      class='clef-code' 
-      src='https://clef.io/v1/clef.js' 
-      data-app-id='6f8fb6e642924a5e9e7deacf35292abf' 
+      <h2>Sign in with Clef</h2>
+      <script type='text/javascript'
+      class='clef-button'
+      src='https://clef.io/v2/clef.js'
+      data-app-id='6f8fb6e642924a5e9e7deacf35292abf'
       data-redirect-url='http://localhost:9292/login'></script>
     <% end %>
   </body>

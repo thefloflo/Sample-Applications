@@ -9,12 +9,12 @@
       <p>Here is your information:</p>
       <pre>{{ user }}</pre>
     {% else %}
-      <h2>Scan the QR code below to sign in</h2>
-      
-      <script type='text/javascript' 
-      class='clef-code' 
-      src='https://clef.io/v1/clef.js' 
-      data-app-id='8c9253dca23777745c9102e0be99ea70' 
+      <h2>Sign in with Clef</h2>
+
+      <script type='text/javascript'
+      class='clef-button'
+      src='https://clef.io/v2/clef.js'
+      data-app-id='8c9253dca23777745c9102e0be99ea70'
       data-redirect-url='http://localhost:5000/login'></script>
     {% endif %}
   </body>
