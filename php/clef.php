@@ -1,13 +1,13 @@
 <?php
-if (!session_id()) {session_start();};
+if (!session_id())
+    session_start();
 
 $msg="";
-$success=0;
 $clef_base_url='https://clef.io/api/v1/';
 $app_id='562306be5c59cc3f2da25095c05da670';
 $app_secret='9fd4e0d1e240e6f95b20a6223c3edbfc';
 
-if (isset($_GET["code"]) && $_GET["code"] != ""):
+if (isset($_GET["code"]) && $_GET["code"] != "") {
     $code = $_GET["code"];
     $postdata = http_build_query(
         array(
@@ -25,59 +25,61 @@ if (isset($_GET["code"]) && $_GET["code"] != ""):
         )
     );
 
+    // get oauth code for the handshake
     $context  = stream_context_create($opts);
     $response = file_get_contents($clef_base_url."authorize", false, $context);
 
-    if($response != false):
+    if($response) {
         $response = json_decode($response);
-        $access_token = $response->{'access_token'};
 
-        $opts = array('http' =>
-            array(
-                'method'  => 'GET'
-            )
-        );
+        if(!isset($response['error'])) {
+            $access_token = $response['access_token'];
 
-        $url = $clef_base_url."info?access_token=".$access_token;
+            $opts = array('http' =>
+                array(
+                    'method'  => 'GET'
+                )
+            );
 
-        $context  = stream_context_create($opts);
-        $response = file_get_contents($url, false, $context);
-        if($response && $response != false):
-            $response = json_decode($response, true);
-            $info = $response['info'];
+            $url = $clef_base_url."info?access_token=".$access_token;
 
-            if (isset($info['id'])&&($info['id']!='')):
-                //remove all the variables in the session
-                session_unset();
-                // destroy the session
-                session_destroy();
-                if (!session_id()) {session_start();};
+            $context  = stream_context_create($opts);
+            $response = file_get_contents($url, false, $context);
+            if($response) {
+                $response = json_decode($response, true);
 
-                $_SESSION['name']     = $result['first_name'].' '.$result['last_name'];
-                $_SESSION['email']    = $result['email'];
-                $_SESSION['user_id']  = $result['id'];
+                if(!isset($response['error'])) {
 
-                $success=1;
-            endif;
-        else:
+                    $info = $response['info'];
+
+                    // reset the user's session
+                    if (isset($info['id'])&&($info['id']!='')) {
+                        //remove all the variables in the session
+                        session_unset();
+                        // destroy the session
+                        session_destroy();
+                        if (!session_id())
+                            session_start();
+
+                        $_SESSION['name']     = $result['first_name'].' '.$result['last_name'];
+                        $_SESSION['email']    = $result['email'];
+                        $_SESSION['user_id']  = $result['id'];
+                        $_SESSION['logged_in_at'] = time();  // timestamp in unix time
+
+                        // send them to the member's area!
+                        header("Location: http://localhost:8888/membersarea.php");
+                    }
+                } else {
+                    echo "Log in with Clef failed, please try again.";
+                }
+            }
+        } else {
             echo "Log in with Clef failed, please try again.";
-        endif;
-    endif;
-endif;
+        }
+        
+    } else {
+        echo "Log in with Clef failed, please try again.";
+    }
+}
 ?>
-
-<!-- =======================================================-->
-<!DOCTYPE html>
-<html>
-<head>
-<title>PHP Sample</title>
-</head>
-<body>
-    <div class='user-info'>
-        <h3>Clef ID: <?php echo $response['info']['id'] ?></h3>
-        <h3>Name: <?php echo $info['first_name']." ".$info['last_name']?></h3>
-        <h3>Email: <?php echo $info['email'] ?></h3>
-    </div>
-</body>
-</html>
 
