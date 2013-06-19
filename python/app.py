@@ -4,12 +4,15 @@ import requests
 import json
 import time
 
-app = Flask(__name__)
-
 SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
 DEBUG = True
 APP_ID = '8c9253dca23777745c9102e0be99ea70'
 APP_SECRET = 'a9a356f16c77bdcddf15f0a1c407dd3a'
+
+app = Flask(__name__)
+app.config.from_object(__name__)
+db = SQLAlchemy(app)
+
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 class User(db.Model):
@@ -21,19 +24,16 @@ class User(db.Model):
 
 @app.route("/")
 def hello():
-    user = session.get('user', None)
-    email = user
-
-    return render_template('index.html', user=user, email=email)
+    return render_template('index.html')
 
 @app.route('/members_area')
 def members_area():
     if session.get('user', None) is None:
-        redirect(url_for("/"))
+        redirect(url_for("hello"))
     elif session.get('logged_in_at', 0) < User.query.filter_by(clef_id=session['user']).first()['logged_out_at']:
         session.clear()
 
-        redirect(url_for("/"))
+        redirect(url_for("hello"))
 
     return render_template("members_area.html", name=User.query.filter_by(clef_id=session['user']).first()['first_name'])
 
@@ -82,10 +82,15 @@ def logout_hook:
             if json_response.get('success', False):
                 clef_id = json_response.get('clef_id', None)
 
-                # add logged_out_at to db
+                user = User.query.filter_by(clef_id=clef_id).first()
 
-    return "ok"
+                user.logged_out_at = time.time()
+
+                db.session.add(user)
+                db.session.commit()
+
+                return "ok"
 
 
 if __name__ == "__main__":
-    app.run(port=5000,debug=True)
+    app.run(port=8888,debug=True)

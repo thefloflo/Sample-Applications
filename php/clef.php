@@ -30,7 +30,7 @@ if (isset($_GET["code"]) && $_GET["code"] != "") {
     $response = file_get_contents($clef_base_url."authorize", false, $context);
 
     if($response) {
-        $response = json_decode($response);
+        $response = json_decode($response, true);
 
         if(!isset($response['error'])) {
             $access_token = $response['access_token'];
@@ -50,10 +50,10 @@ if (isset($_GET["code"]) && $_GET["code"] != "") {
 
                 if(!isset($response['error'])) {
 
-                    $info = $response['info'];
+                    $result = $response['info'];
 
                     // reset the user's session
-                    if (isset($info['id'])&&($info['id']!='')) {
+                    if (isset($result['id'])&&($result['id']!='')) {
                         //remove all the variables in the session
                         session_unset();
                         // destroy the session
@@ -67,7 +67,7 @@ if (isset($_GET["code"]) && $_GET["code"] != "") {
                         $_SESSION['logged_in_at'] = time();  // timestamp in unix time
 
                         // send them to the member's area!
-                        header("Location: http://localhost:8888/membersarea.php");
+                        header("Location: members_area.php");
                     }
                 } else {
                     echo "Log in with Clef failed, please try again.";
