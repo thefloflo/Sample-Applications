@@ -12,7 +12,7 @@
 
         $postdata = http_build_query(
             array(
-                'token' => $_REQUEST['logout_token'],
+                'logout_token' => $_REQUEST['logout_token'],
                 'app_id' => $app_id,
                 'app_secret' => $app_secret
             )
