@@ -5,7 +5,7 @@
   </head>
   <body>
     <% if (user) {%>
-      <h2>Welcome <%=email%></h2>
+      <h2>Welcome <%=user.email%></h2>
       <pre>
         <%=JSON.stringify(user)%>
       </pre>
